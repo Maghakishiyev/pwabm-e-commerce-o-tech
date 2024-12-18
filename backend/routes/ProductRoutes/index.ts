@@ -5,12 +5,12 @@ import { isAdmin } from "@/middleware/adminMiddleware";
 
 const router = express.Router();
 
-router.get("/products", getProducts);
+router.get("/", getProducts);
 
-router.post("/product", isAdmin, createProduct);
+router.post("/", isAdmin, createProduct);
 
-router.put("/product/:id", isAdmin, updateProduct);
+router.put("/:id", isAdmin, updateProduct);
 
-router.delete("/product/:id", deleteProduct);
+router.delete("/:id", deleteProduct);
 
 export default router;

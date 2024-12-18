@@ -36,7 +36,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/brand', brandRoutes);
-app.use('/api', productRoutes);
+app.use('/api/products', productRoutes);
 
 app.listen(parseInt(PORT, 10), () => {
     console.log(`Server is listening on port ${PORT}`);
