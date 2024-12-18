@@ -6,6 +6,7 @@ import { dbConnection } from './db';
 import authRoutes from '@/routes/AuthRoutes';
 import categoryRoutes from '@/routes/CategoryRoutes';
 import brandRoutes from '@/routes/BrandRoutes';
+import productRoutes from '@/routes/ProductRoutes';
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/brand', brandRoutes);
+app.use('/api', productRoutes);
 
 app.listen(parseInt(PORT, 10), () => {
     console.log(`Server is listening on port ${PORT}`);
