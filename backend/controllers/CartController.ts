@@ -105,3 +105,63 @@ export const deleteCartItem = async (req: Request, res: Response) => {
         return res.status(500).json({ error: 'Failed to delete item from cart' });
     }
 };
+
+// Add an item to the cart
+export const addItem = async (req: Request, res: Response) => {
+    try {
+        const { user_id, product_id, selected_color, selected_memory_size, quantity, price } = req.body;
+        const cart = await Cart.findOne({ user_id });
+        const newItem = { product_id, selected_color, selected_memory_size, quantity, price };
+
+        if (cart) {
+            cart.cart_items.push(newItem);
+            cart.total_price += price * quantity;
+            await cart.save();
+        } else {
+            await Cart.create({
+                user_id,
+                cart_items: [newItem],
+                total_price: price * quantity,
+            });
+        }
+        res.status(200).json({ message: "Item added to cart successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error adding item to cart", error });
+    }
+};
+
+// Remove an item from the cart
+export const removeItem = async (req: Request, res: Response) => {
+    try {
+        const { user_id, product_id } = req.body;
+        const cart = await Cart.findOne({ user_id });
+        if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+        const itemIndex = cart.cart_items.findIndex((item) => item.product_id === product_id);
+        if (itemIndex !== -1) {
+            const item = cart.cart_items[itemIndex];
+            cart.total_price -= item.price * item.quantity;
+            cart.cart_items.splice(itemIndex, 1);
+            await cart.save();
+        }
+        res.status(200).json({ message: "Item removed from cart successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error removing item from cart", error });
+    }
+};
+
+// Clear all items from the cart
+export const clearCart = async (req: Request, res: Response) => {
+    try {
+        const { user_id } = req.body;
+        const cart = await Cart.findOne({ user_id });
+        if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+        cart.cart_items = [];
+        cart.total_price = 0;
+        await cart.save();
+        res.status(200).json({ message: "Cart cleared successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error clearing cart", error });
+    }
+};

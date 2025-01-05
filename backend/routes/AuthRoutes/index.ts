@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs';
 import { User } from '@/models/user/model';
 import jwt from 'jsonwebtoken';
 import { hashPassword } from '@/utils/hashPassword';
-import { authCheck } from '@/middleware';
+import { authCheck, ReqWithUser } from '@/middleware';
 import config from '@/configs';
 
 const router = express.Router();
@@ -107,6 +107,17 @@ router.put(`/user/:id`, authCheck, async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).send(error);
     }
+});
+
+// Token Refresh
+router.post('/refresh', authCheck, (req: ReqWithUser, res: Response) => {
+    const user = req.user; // From authCheck middleware
+    if (!user) return res.status(401).json({ message: 'Unauthorized' });
+
+    const newToken = jwt.sign({ userId: user.userId }, JWT_SECRET, {
+        expiresIn: '1h',
+    });
+    res.status(200).json({ token: newToken });
 });
 
 export default router;
