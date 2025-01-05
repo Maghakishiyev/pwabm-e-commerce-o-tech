@@ -8,6 +8,8 @@ import categoryRoutes from '@/routes/CategoryRoutes';
 import brandRoutes from '@/routes/BrandRoutes';
 import productRoutes from '@/routes/ProductRoutes';
 import shippingMethodRoutes from '@/routes/ShippingMethodRoutes';
+import orderRoutes from '@/routes/OrderRoutes';
+import cartRoutes from '@/routes/CartRoutes';
 
 dotenv.config();
 
@@ -39,6 +41,8 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/brand', brandRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/shipping-methods', shippingMethodRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.listen(parseInt(PORT, 10), () => {
     console.log(`Server is listening on port ${PORT}`);
