@@ -4,7 +4,7 @@ import { IUser } from './interface';
 const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: { type: String, required: false },
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
     birthday: { type: String, required: false },
