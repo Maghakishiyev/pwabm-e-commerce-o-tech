@@ -1,17 +1,13 @@
-import express from 'express';
-import {
-    addItem,
-    removeItem,
-    getCart,
-    clearCart,
-} from '@/controllers/CartController';
-import { authCheck } from '@/middleware/authCheck';
+import { Router } from 'express';
+import * as CartController from '@/controllers/CartController';  // Import the cart controller functions
+import { authCheck } from '@/middleware/authCheck';  // Assuming you have a middleware for authentication
 
-const router = express.Router();
+const router = Router();
 
-router.post('/add', authCheck, addItem); // Add item to cart
-router.post('/remove', authCheck, removeItem); // Remove item from cart
-router.get('/:user_id', authCheck, getCart); // Get user's cart
-router.post('/clear', authCheck, clearCart); // Clear user's cart
+router.get('/carts', authCheck, CartController.getCart);
+
+router.post('/carts/add', authCheck, CartController.addCartItem);
+
+router.delete('/carts/delete/:itemId', authCheck, CartController.deleteCartItem);
 
 export default router;
