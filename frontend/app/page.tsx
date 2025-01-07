@@ -1,8 +1,7 @@
 import { BoxIcon, CallIcon, GrowthIcon } from "@/assets"; // Ensure icons are imported properly
 import { JSX } from "react";
-import { Container } from "@/components";
+import { Container, Footer } from "@/components";
 
-// Service Card Component
 const ServiceCard = ({ title, description, icon }: { title: string; description: string; icon: JSX.Element }) => {
   return (
     <div className="text-center max-w-xs mx-auto bg-white p-6 rounded-lg shadow-xl transform transition-transform duration-300 hover:scale-105">
@@ -35,18 +34,22 @@ export default function Home() {
   ];
 
   return (
-    <Container> {/* Prevent horizontal scroll */}
-      <h2 className="text-[26px] font-bold text-left mt-[100px] mb-10">Our Services</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {services.map((service, index) => (
-          <ServiceCard
-            key={index}
-            title={service.title}
-            description={service.description}
-            icon={service.icon}
-          />
-        ))}
-      </div>
-    </Container>
+    <>
+      <Container className="pb-40">
+        <h2 className="text-[26px] font-bold text-left mt-[100px] mb-10">Our Services</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <ServiceCard
+              key={index}
+              title={service.title}
+              description={service.description}
+              icon={service.icon}
+            />
+          ))}
+        </div>
+      </Container>
+      <Footer />
+    </>
+
   );
 }
