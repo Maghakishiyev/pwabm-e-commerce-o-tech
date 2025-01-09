@@ -8,7 +8,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
             {/* Form Section */}
-            <div className="w-full flex items-center justify-center sm:flex-row">
+            <div className="w-full flex items-center justify-center ">
                 {children}
             </div>
 

@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import React, { useState, FormEvent } from 'react'
 import img from '@/public/images/test/Frame 10.jpg'
-
+import Link from 'next/link'
 
 export default function LoginForm() {
     const [email, setEmail] = useState('')
@@ -15,23 +15,28 @@ export default function LoginForm() {
     }
 
     return (
-        <div className="flex min-h-screen items-center  bg-gradient-to-r p-6">
-            <div className="flex w-full max-w-4xl rounded-lg overflow-hidden">
-               
-                <div className="relative hidden md:flex w-1/2 h-auto">
+        <div className="flex min-h-screen flex-col items-center bg-gradient-to-r p-6 md:flex-row">
+            {/* Container for Image & Form - flex on md and above, stacked on small screens */}
+            <div className="w-full max-w-4xl rounded-lg overflow-hidden md:flex md:flex-row">
+
+                {/* Image container */}
+                <div className="relative w-full h-auto md:w-1/2">
                     <Image
-                        src={img} 
+                        src={img}
                         alt="Login"
-                        layout="intrinsic" 
-                        width={800} 
-                        height={600} 
+                        // Ensure you use correct layout props depending on your Next/Image version
+                        layout="responsive"
+                        width={800}
+                        height={600}
+                        className="h-full w-full object-cover"
                     />
                 </div>
-                <form
-                    onSubmit={handleSubmit}
-                    className="w-full md:w-1/2 p-8"
-                >
-                    <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">Login</h1>
+
+                {/* Form container */}
+                <form onSubmit={handleSubmit} className="w-full p-8 md:w-1/2">
+                    <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">
+                        Login to Your Account
+                    </h1>
 
                     <label htmlFor="email" className="mb-2 block font-medium text-gray-700">
                         Email:
@@ -59,15 +64,19 @@ export default function LoginForm() {
 
                     <button
                         type="submit"
-                        className="w-full rounded bg-blue-500 py-2 text-white font-bold hover:bg-blue-700 transition duration-300"
+                        className="w-full rounded bg-blue-500 py-2 font-bold text-white transition duration-300 hover:bg-blue-700"
                     >
                         Login
                     </button>
 
                     <div className="mt-4 text-center">
-                        <a href="#" className="text-blue-500 hover:underline">Forgot your password?</a>
+                        <span className="text-gray-700">Don’t have an account? </span>
+                        <Link href="/signup" className="text-blue-500 hover:underline">
+                            Sign up now
+                        </Link>
                     </div>
                 </form>
+
             </div>
         </div>
     )
