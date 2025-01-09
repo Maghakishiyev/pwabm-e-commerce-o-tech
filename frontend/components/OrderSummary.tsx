@@ -2,7 +2,7 @@
 import React from 'react'
 
 interface CartItem {
-    price: number
+    price: string
     quantity: number
 }
 
@@ -21,7 +21,7 @@ export default function OrderSummary({
 }: OrderSummaryProps) {
     // 1. Calculate total price of all items
     const itemsTotal = cartItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
+        (acc, item) => acc + Number(item.price) * item.quantity,
         0
     )
 
@@ -41,7 +41,7 @@ export default function OrderSummary({
     })
 
     return (
-        <div className="rounded-lg border p-4 shadow-sm max-w-sm">
+        <div className="rounded-lg border p-4 shadow-sm max-w-md">
             <h2 className="mb-4 text-xl font-bold">Order Summary</h2>
 
             <div className="mb-2 flex justify-between">
