@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import './header.css'; // Ensure this path matches your project structure.
+import Link from 'next/link';
 
 interface IHeader {
-  isSignedIn: boolean; // Indicates if the user is signed in
+  isSignedIn: boolean;
 }
 
 const Header: React.FC<IHeader> = ({ isSignedIn }) => {
@@ -13,32 +13,82 @@ const Header: React.FC<IHeader> = ({ isSignedIn }) => {
 
   const handleCartOrProfileClick = (path: string) => {
     if (isSignedIn) {
-      router.push(path); // Go to the page if the user is signed in
+      router.push(path);
     } else {
-      router.push('/signin'); // Redirect to the sign-in page if not signed in
+      router.push('/signin');
     }
   };
 
   return (
-    <nav className="navbar">
+    <nav className="flex items-center justify-between px-8 py-4 bg-white border-b border-gray-200">
       {/* Logo */}
-      <div className="navbar-logo" onClick={() => router.push('/')}>
-        O-Tech
+      <div 
+        className="flex items-center text-2xl font-bold cursor-pointer text-gray-900" 
+        onClick={() => router.push('/')}
+      >
+        <span className="logo-o">O</span>
+        <span className="logo-dash">-</span>
+        <span className="logo-tech">Tech</span>
       </div>
 
       {/* Navigation Links */}
-      <ul className="navbar-links">
-        <li>
-          <a href="#footer">Contact</a>
-        </li>
-        <li onClick={() => router.push('/categories')}>Categories</li>
-        <li onClick={() => handleCartOrProfileClick('/cart')}>
-          <i className="icon-cart"></i>
-        </li>
-        <li onClick={() => handleCartOrProfileClick('/profile')}>
-          <i className="icon-profile"></i>
-        </li>
-      </ul>
+      <div className="flex items-center gap-8">
+        <Link 
+          href="/" 
+          className="text-indigo-600 font-medium hover:text-indigo-500 transition-colors"
+        >
+          Home
+        </Link>
+        <Link 
+          href="#footer" 
+          className="text-gray-900 font-medium hover:text-indigo-500 transition-colors"
+        >
+          Contact
+        </Link>
+        <Link 
+          href="/categories" 
+          className="text-gray-900 font-medium hover:text-indigo-500 transition-colors"
+        >
+          Categories
+        </Link>
+      </div>
+
+      {/* Right Icons */}
+      <div className="flex items-center gap-4">
+        <button 
+          className="p-2 text-gray-900 hover:text-indigo-500 transition-colors"
+          onClick={() => handleCartOrProfileClick('/cart')}
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-6 w-6" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor" 
+            strokeWidth="2"
+          >
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+        </button>
+        <button 
+          className="p-2 text-gray-900 hover:text-indigo-500 transition-colors"
+          onClick={() => handleCartOrProfileClick('/profile')}
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-6 w-6" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor" 
+            strokeWidth="2"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+      </div>
     </nav>
   );
 };
