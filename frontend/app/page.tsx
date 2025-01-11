@@ -13,7 +13,7 @@ const ServiceCard = ({ title, description, icon }: { title: string; description:
     </div>
   );
 };
-
+{/*Bismillahir Rahmanir Raheem*/}
 export default function Home() {
   const services = [
     {
