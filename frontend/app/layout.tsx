@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../widgets/Header"; // Adjust this path based on your project structure
 import "./globals.css"; // Main global styles
+import { Header } from "@/components";
 
 const isSignedIn = false; // Replace this with your authentication logic
 

@@ -1,7 +1,6 @@
 import { BoxIcon, CallIcon, GrowthIcon } from "@/assets"; // Ensure icons are imported properly
 import { JSX } from "react";
-import { BestsellerProducts, Container, Footer } from "@/components";
-import { LandingBanner } from '@/components/Landing/ Banner';
+import { BestsellerProducts, Container, Footer, LandingBanner } from "@/components";
 
 const ServiceCard = ({ title, description, icon }: { title: string; description: string; icon: JSX.Element }) => {
   return (
@@ -14,6 +13,7 @@ const ServiceCard = ({ title, description, icon }: { title: string; description:
     </div>
   );
 };
+
 {/*Bismillahir Rahmanir Raheem*/ }
 export default function Home() {
   const services = [
@@ -36,8 +36,8 @@ export default function Home() {
 
   return (
     <>
+      <LandingBanner />
       <Container className="pb-40">
-        <LandingBanner />
         <BestsellerProducts />
         <h2 className="text-[26px] font-bold text-left mt-[100px] mb-10">Our Services</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
