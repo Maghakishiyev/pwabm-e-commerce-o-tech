@@ -66,6 +66,7 @@ const BestsellerProducts = () => {
             <h2 className="text-[26px] font-bold text-left mt-[100px] mb-10">Bestseller Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {products.map(product => (
+
                     <ItemViewCard
                         key={product.id}
                         id={product.id}
@@ -75,6 +76,7 @@ const BestsellerProducts = () => {
                         itemImageUrl={product.itemImageUrl}
                         price={product.price}
                     />
+
                 ))}
             </div>
         </>

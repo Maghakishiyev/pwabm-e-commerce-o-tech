@@ -5,3 +5,6 @@ export { default as SignupForm } from './SignupForm';
 export { default as CartItem } from './CartItem';
 export { default as OrderSummary } from './OrderSummary';
 export { default as BestsellerProducts } from './BestsellerProducts';
+export { default as Header } from './Header';
+export { ItemViewCard } from './ItemViewCard';
+export { default as LandingBanner } from './Banner';
