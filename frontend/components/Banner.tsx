@@ -10,7 +10,7 @@ import controller from "@/public/images/landing/controller.png";
 
 const LandingBanner: React.FC = () => {
     return (
-        <Container className="relative  mx-auto my-8 rounded-xl overflow-hidden bg-gradient-to-r from-[#238CEC] to-[#054279] shadow-lg">
+        <div className="relative  mx-auto my-8 rounded-xl overflow-hidden bg-gradient-to-r from-[#238CEC] to-[#054279] shadow-lg">
             <div className="text-center md:text-center flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold text-white mt-14">
                     Unlock Tomorrow&apos;s Tech Today With Us!
@@ -50,7 +50,7 @@ const LandingBanner: React.FC = () => {
                     />
                 </div>
             </div>
-        </Container>
+        </div>
     );
 };
 
