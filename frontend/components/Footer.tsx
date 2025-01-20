@@ -28,16 +28,16 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-8">
-                    <Link href="/about" passHref legacyBehavior>
+                    <Link href="#about" passHref legacyBehavior>
                         <a className="text-white hover:text-gray-300">About Us</a>
                     </Link>
-                    <Link href="/services" passHref legacyBehavior>
+                    <Link href="#services" passHref legacyBehavior>
                         <a className="text-white hover:text-gray-300">Services</a>
                     </Link>
-                    <Link href="/contact" passHref legacyBehavior>
+                    <Link href="#contact" passHref legacyBehavior>
                         <a className="text-white hover:text-gray-300">Contact</a>
                     </Link>
-                    <Link href="/privacy" passHref legacyBehavior>
+                    <Link href="#privacy" passHref legacyBehavior>
                         <a className="text-white hover:text-gray-300">Privacy Policy</a>
                     </Link>
                 </div>

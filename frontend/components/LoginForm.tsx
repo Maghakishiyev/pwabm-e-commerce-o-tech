@@ -1,30 +1,52 @@
-"use client"
-import Image from 'next/image'
-import React, { useState, FormEvent } from 'react'
-import img from '@/public/images/test/Frame 10.jpg'
-import Link from 'next/link'
+"use client";
+import React, { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import img from "@/public/images/test/Frame 10.jpg";
+import Link from "next/link";
+import axios from "axios"; // Import Axios
 
 export default function LoginForm() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const router = useRouter();
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        console.log('Email:', email)
-        console.log('Password:', password)
-    }
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("http://localhost:8080/api/auth/signin", {
+                email,
+                password,
+            });
+
+            // Handle success response
+            setSuccess(response.data.message);
+            setError(""); // Clear any previous error
+
+            setTimeout(() => {
+                router.push('/'); // Replace '/profile' with your desired route
+            }, 1000);
+        } catch (error: unknown) {
+            // Handle error response
+            if (axios.isAxiosError(error) && error.response) {
+                setError(error.response.data?.message || "An error occurred");
+            } else {
+                setError("An error occurred");
+            }
+            setSuccess(""); // Clear any previous success message
+        }
+    };
 
     return (
         <div className="flex min-h-screen flex-col items-center bg-gradient-to-r p-6 md:flex-row">
-            {/* Container for Image & Form - flex on md and above, stacked on small screens */}
             <div className="w-full max-w-4xl rounded-lg overflow-hidden md:flex md:flex-row">
-
-                {/* Image container */}
                 <div className="relative w-full h-auto md:w-1/2">
                     <Image
                         src={img}
                         alt="Login"
-                        // Ensure you use correct layout props depending on your Next/Image version
                         layout="responsive"
                         width={800}
                         height={600}
@@ -32,11 +54,21 @@ export default function LoginForm() {
                     />
                 </div>
 
-                {/* Form container */}
                 <form onSubmit={handleSubmit} className="w-full p-8 md:w-1/2">
                     <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">
                         Login to Your Account
                     </h1>
+
+                    {error && (
+                        <p className="mb-4 text-center text-red-500">
+                            {error}
+                        </p>
+                    )}
+                    {success && (
+                        <p className="mb-4 text-center text-green-500">
+                            {success}
+                        </p>
+                    )}
 
                     <label htmlFor="email" className="mb-2 block font-medium text-gray-700">
                         Email:
@@ -76,8 +108,7 @@ export default function LoginForm() {
                         </Link>
                     </div>
                 </form>
-
             </div>
         </div>
-    )
+    );
 }
