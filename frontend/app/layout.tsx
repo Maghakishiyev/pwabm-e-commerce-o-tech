@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header isSignedIn={isSignedIn} />
 
         {/* Main Content */}
-        <main>{children}</main>
+        <main >{children}</main>
       </body>
     </html>
   );
