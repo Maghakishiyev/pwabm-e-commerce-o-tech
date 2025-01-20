@@ -5,11 +5,12 @@ import mockProducts from "./mockdata";
 
 
 const ProductsPage = () => {
-    
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 2000 });
+
+    const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
     const [sortOption, setSortOption] = useState("price"); // Default sort by price
     const [currentPage, setCurrentPage] = useState(1);
+    const [expanded, setExpanded] = useState<string | null>(null);
     const itemsPerPage = 9;
 
     // Filter products
@@ -25,66 +26,127 @@ const ProductsPage = () => {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+    const toggleAccordion = (section: string) => {
+        setExpanded(expanded === section ? null : section);
+    };
+    const brands = [
+        { name: "Apple", count: 110 },
+        { name: "Samsung", count: 125 },
+        { name: "Xiaomi", count: 68 },
+        { name: "Poco", count: 44 },
+        { name: "OPPO", count: 36 },
+        { name: "Honor", count: 10 },
+        { name: "Motorola", count: 34 },
+        { name: "Nokia", count: 22 },
+        { name: "Realme", count: 35 },
+    ];
+
 
     return (
-        <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 p-6">
+        <div className="flex flex-col lg:flex-row min-h-screen bg-white p-6 gap-5">
             {/* Sidebar */}
-            <aside className="w-full lg:w-1/4 p-4 bg-white shadow rounded-lg mb-6 lg:mb-0">
+            <aside className="w-full lg:w-1/5 p-4 bg-white shadow rounded-lg mb-6 lg:mb-0">
                 <h2 className="text-lg font-bold mb-4">Filters</h2>
 
-                {/* Price Range Filter */}
-                <div className="mb-6">
-                    <h3 className="font-semibold mb-2">Price</h3>
-                    <div className="flex items-center space-x-2">
-                        <input
-                            type="number"
-                            value={priceRange.min}
-                            onChange={(e) => setPriceRange({ ...priceRange, min: Number(e.target.value) })}
-                            className="w-full border rounded p-2"
-                            placeholder="Min"
-                        />
-                        <input
-                            type="number"
-                            value={priceRange.max}
-                            onChange={(e) => setPriceRange({ ...priceRange, max: Number(e.target.value) })}
-                            className="w-full border rounded p-2"
-                            placeholder="Max"
-                        />
+                {/* Price Filter */}
+                <div className="border-b pb-4 mb-4">
+                    <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => toggleAccordion("price")}
+                    >
+                        <h3 className="font-semibold text-gray-800">Price</h3>
+                        <span className="text-sm">{expanded === "price" ? "▲" : "▼"}</span>
                     </div>
+                    {expanded === "price" && (
+                        <div className="mt-4">
+                            <div className="flex items-center space-x-2">
+                                <input
+                                    type="number"
+                                    value={priceRange.min}
+                                    onChange={(e) =>
+                                        setPriceRange({ ...priceRange, min: Number(e.target.value) })
+                                    }
+                                    className="w-full border rounded p-2"
+                                    placeholder="From"
+                                />
+                                <input
+                                    type="number"
+                                    value={priceRange.max}
+                                    onChange={(e) =>
+                                        setPriceRange({ ...priceRange, max: Number(e.target.value) })
+                                    }
+                                    className="w-full border rounded p-2"
+                                    placeholder="To"
+                                />
+                            </div>
+                            {/* Price Slider (Optional) */}
+                            <input
+                                type="range"
+                                min="0"
+                                max="5299"
+                                value={priceRange.min}
+                                onChange={(e) =>
+                                    setPriceRange({ ...priceRange, min: Number(e.target.value) })
+                                }
+                                className="mt-4 w-full"
+                            />
+                            <input
+                                type="range"
+                                min="0"
+                                max="5299"
+                                value={priceRange.max}
+                                onChange={(e) =>
+                                    setPriceRange({ ...priceRange, max: Number(e.target.value) })
+                                }
+                                className="mt-2 w-full"
+                            />
+                        </div>
+                    )}
                 </div>
 
                 {/* Brand Filter */}
-                <div className="mb-6">
-                    <h3 className="font-semibold mb-2">Brand</h3>
-                    <div>
-                        {["Apple", "Samsung", "Xiaomi"].map((brand) => (
-                            <label key={brand} className="flex items-center mb-2">
-                                <input
-                                    type="radio"
-                                    value={brand}
-                                    checked={selectedBrand === brand}
-                                    onChange={() => setSelectedBrand(brand)}
-                                    className="mr-2"
-                                />
-                                {brand}
-                            </label>
-                        ))}
-                        <label className="flex items-center">
-                            <input
-                                type="radio"
-                                value=""
-                                checked={!selectedBrand}
-                                onChange={() => setSelectedBrand(null)}
-                                className="mr-2"
-                            />
-                            All Brands
-                        </label>
+                <div className="border-b pb-4 mb-4">
+                    <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => toggleAccordion("brand")}
+                    >
+                        <h3 className="font-semibold text-gray-800">Brand</h3>
+                        <span className="text-sm">{expanded === "brand" ? "▲" : "▼"}</span>
                     </div>
+                    {expanded === "brand" && (
+                        <div className="mt-4">
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className="w-full border rounded p-2 mb-4"
+                            />
+                            <div className="space-y-2">
+                                {brands.map((brand) => (
+                                    <label key={brand.name} className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            value={brand.name}
+                                            checked={selectedBrand === brand.name}
+                                            onChange={() =>
+                                                setSelectedBrand(
+                                                    selectedBrand === brand.name ? null : brand.name
+                                                )
+                                            }
+                                            className="mr-2"
+                                        />
+                                        <span className="text-gray-700">
+                                            {brand.name} <span className="text-gray-400">({brand.count})</span>
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1">
+            <main className="flex-1 overflow-y-auto" >
                 <header className="flex items-center justify-between mb-4">
                     <h1 className="text-2xl font-bold">All Products</h1>
                     <div>
