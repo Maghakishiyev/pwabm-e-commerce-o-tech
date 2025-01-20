@@ -43,12 +43,15 @@ router.post('/signin', async (req: Request, res: Response) => {
 });
 
 router.post('/signup', async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, password, phoneNumber, fullName } = req.body;
+    console.log(req.body);
     try {
         const hashedPassword = await hashPassword(password);
         const user = new User({
             email,
             password: hashedPassword,
+            phoneNumber,
+            fullName
         });
 
         await user.save(); // Save the user first
