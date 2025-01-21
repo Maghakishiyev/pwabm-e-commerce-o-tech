@@ -1,11 +1,7 @@
 import { BoxIcon, CallIcon, GrowthIcon } from '@/assets'; // Ensure icons are imported properly
 import { JSX } from 'react';
-import {
-    BestsellerProducts,
-    Container,
-    Footer,
-    LandingBanner,
-} from '@/components';
+import { BestsellerProducts, Container, LandingBanner } from '@/components';
+import { BigSummerSaleBanner } from '@/components/BigSummerSaleBanner';
 
 const ServiceCard = ({
     title,
@@ -73,6 +69,8 @@ export default function Home() {
                 <LandingBanner />
 
                 <BestsellerProducts />
+
+                <BigSummerSaleBanner />
                 <h2 className='text-[26px] font-bold text-left mt-[100px] mb-10'>
                     Our Services
                 </h2>
