@@ -3,7 +3,6 @@ import { JSX } from 'react';
 import {
     BestsellerProducts,
     Container,
-    Footer,
     LandingBanner,
 } from '@/components';
 
