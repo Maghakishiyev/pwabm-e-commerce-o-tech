@@ -7,7 +7,7 @@ const PopularItemTestPage = () => {
                 brandDescription='iPad combines a magnificent 10.2-inch Retina display, incredible performance, multitasking and ease of use.'
                 brandId='smart-watches'
                 brandName='Smart Watches'
-                brandImageUrl='/images/smartwatches.png'
+                brandImageUrl='/images/test/smartwatches.png'
             />
         </div>
     );
