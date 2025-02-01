@@ -1,19 +1,47 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import mockProducts from "../mockdata";
+import { IProduct } from "../interface";
+import axios from "axios";
 
 
 
 const ProductPage = () => {
     const params = useParams();
+    const [product, setProduct] = useState<IProduct | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [selectedColor, setSelectedColor] = useState<string | null>(null);
     const [selectedMemory, setSelectedMemory] = useState<string | null>(null);
     const id = params.id;
 
-    const data = [...mockProducts];
-    const product = data.find((product) => product.id === id); // Find product by ID
+    useEffect(() => {
+        if (id) {
+            const fetchProduct = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8080/api/products`);
+                    const product: IProduct | undefined = response.data.products.find((product: IProduct) => product._id === id);
+                    setProduct(product || null);
+                    setError(null);
+                } catch (error) {
+                    console.error("Error fetching product details:", error);
+                    setError("Failed to load product details.");
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchProduct();
+        }
+    }, [id]);
+    if (loading) {
+        return <p>Loading product details...</p>;
+    }
+
+    if (error) {
+        return <p className="text-red-500">{error}</p>;
+    }
 
     // Handle if the product is not found
     if (!product) {
@@ -25,9 +53,8 @@ const ProductPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
-
-            <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-md p-8">
+        <div className="min-h-screen bt-1">
+            <div className="max-w-5xl mx-auto p-8">
                 <div className="flex flex-col md:flex-row justify-between">
                     <div className="flex flex-col">
                         <h1 className="text-4xl font-bold text-gray-800 mb-6">
@@ -42,7 +69,7 @@ const ProductPage = () => {
                         <div className="flex items-center space-x-4 mb-4">
                             <span className="text-gray-900 text-base font-medium">Select color:</span>
                             <div className="flex space-x-2">
-                                {product.availableColors.map((color, index) => (
+                                {product.available_colors && product.available_colors.map((color, index) => (
                                     <div
                                         key={index}
                                         onClick={() => setSelectedColor(color)}
@@ -55,7 +82,7 @@ const ProductPage = () => {
                         </div>
 
                         <div className="flex space-x-4">
-                            {product.memory.map((option, index) => (
+                            {product.available_memory && product.available_memory.map((option, index) => (
                                 <div
                                     key={index}
                                     onClick={() => setSelectedMemory(option)} // Set selected option
@@ -81,7 +108,7 @@ const ProductPage = () => {
                     </div>
 
                     <Image
-                        src={product.itemImageUrl}
+                        src={product.product_image_url || "/default-image.jpg"}
                         alt={product.name}
                         className="w-full md:w-1/2 object-contain rounded-lg"
                         width={500}

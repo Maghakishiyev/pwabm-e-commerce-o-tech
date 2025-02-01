@@ -1,31 +1,22 @@
+import { IProduct } from "@/app/products/interface";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-interface IItemViewCard {
-    id: string;
-    name: string;
-    description: string;
-    price: string;
-    availableColors: string[];
-    itemImageUrl: string;
-}
-
-export const ItemViewCard: React.FC<IItemViewCard> = ({
-    id,
+export const ItemViewCard: React.FC<IProduct> = ({
+    _id,
     name,
-    description,
+    detail_description,
     price,
-    availableColors,
-    itemImageUrl,
-}: IItemViewCard) => {
+    available_colors,
+    product_image_url,
+}: IProduct) => {
     return (
         <div className="bg-white rounded-lg shadow-lg dark:bg-gray-100 p-4 flex flex-col items-center hover:shadow-xl transition-shadow duration-300">
             {/* Product Image */}
-            <Link href={`/products/${id}`} key={id}>
+            <Link href={`/products/${_id}`} key={_id}>
                 <Image
                     className="w-[200px] h-[200px] object-contain rounded-lg mb-4"
-                    src={itemImageUrl}
+                    src={product_image_url}
                     alt={name}
                     width={600}
                     height={800}
@@ -38,7 +29,7 @@ export const ItemViewCard: React.FC<IItemViewCard> = ({
 
                 {/* Description */}
                 <p className="text-sm text-gray-500 text-center mb-4">
-                    {description.length > 60 ? `${description.substring(0, 60)}...` : description}
+                    {detail_description}
                 </p>
 
                 {/* Price and Color Options */}
@@ -48,7 +39,7 @@ export const ItemViewCard: React.FC<IItemViewCard> = ({
 
                     {/* Color Options */}
                     <div className="flex space-x-2">
-                        {availableColors.map((color, index) => (
+                        {(available_colors ?? []).map((color, index) => (
                             <span
                                 key={index}
                                 className="w-5 h-5 rounded-full border border-gray-300"
