@@ -1,34 +1,58 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ItemViewCard } from "@/components";
-import mockProducts from "./mockdata";
+import axios from "axios";
+import { IProduct } from "./interface";
 
 
 const ProductsPage = () => {
-
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
+    const [products, setProducts] = useState<IProduct[]>([]); // Store fetched products
+    const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
     const [sortOption, setSortOption] = useState("price"); // Default sort by price
     const [currentPage, setCurrentPage] = useState(1);
     const [expanded, setExpanded] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true); // Add loading state
+    const [error, setError] = useState<string | null>(null); // Add error state
     const itemsPerPage = 9;
 
-    // Filter products
-    const filteredProducts = mockProducts
-        .filter((product) => Number(product.price) >= priceRange.min && Number(product.price) <= priceRange.max)
-        .filter((product) => (selectedBrand ? product.brand === selectedBrand : true))
-        .sort((a, b) => (sortOption === "price" ? parseFloat(a.price) - parseFloat(b.price) : 0));
 
-    // Paginate products
-    const totalProducts = filteredProducts.length;
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/products");
+                setProducts(response?.data?.products || []);
+                setPriceRange({
+                    min: response.data.minPrice,
+                    max: response.data.maxPrice
+                })
+                setError(null);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                setError("Failed to fetch products. Please try again.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const filteredProducts = products
+        .filter((product) => Number(product.price) >= priceRange.min && Number(product.price) <= priceRange.max)
+        .filter((product) => (selectedBrand ? product.brand_id === selectedBrand : true))
+        .sort((a, b) => (sortOption === "price" ? parseFloat(a.price) - parseFloat(b.price) : 0));
+    const totalProducts = products.length;
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
-    const paginatedProducts = filteredProducts.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
+    // const products = products.slice(
+    //     (currentPage - 1) * itemsPerPage,
+    //     currentPage * itemsPerPage
+    // );
+
     const toggleAccordion = (section: string) => {
         setExpanded(expanded === section ? null : section);
     };
+
     const brands = [
         { name: "Apple", count: 110 },
         { name: "Samsung", count: 125 },
@@ -79,7 +103,6 @@ const ProductsPage = () => {
                                     placeholder="To"
                                 />
                             </div>
-                            {/* Price Slider (Optional) */}
                             <input
                                 type="range"
                                 min="0"
@@ -146,7 +169,7 @@ const ProductsPage = () => {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 overflow-y-auto" >
+            <main className="flex-1 overflow-y-auto">
                 <header className="flex items-center justify-between mb-4">
                     <h1 className="text-2xl font-bold">All Products</h1>
                     <div>
@@ -162,26 +185,38 @@ const ProductsPage = () => {
                     </div>
                 </header>
 
+                {/* Loading Spinner */}
+                {loading && <p>Loading products...</p>}
+
+                {/* Error Message */}
+                {error && <p className="text-red-500">{error}</p>}
+
                 {/* Product Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {paginatedProducts.map((product) => (
-
-                        <ItemViewCard
-                            key={product.id}
-                            id={product.id}
-                            name={product.name}
-                            description={product.description}
-                            price={product.price}
-                            availableColors={product.availableColors}
-                            itemImageUrl={product.itemImageUrl}
-                        />
-
-                    ))}
-                </div>
+                {!loading && !error && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {products.length > 0 ? (
+                            filteredProducts.map((product) => (console.log(product),
+                                <ItemViewCard
+                                    key={product._id}
+                                    _id={product._id}
+                                    name={product.name}
+                                    detail_description={product.detail_description}
+                                    price={product.price}
+                                    available_colors={product.available_colors}
+                                    product_image_url={product.product_image_url}
+                                    category_id={product.category_id}
+                                    brand_id={product.brand_id}
+                                />
+                            ))
+                        ) : (
+                            <p>No products found.</p>
+                        )}
+                    </div>
+                )}
 
                 {/* Pagination */}
                 <div className="flex items-center justify-center mt-6 space-x-2">
-                    {Array.from({ length: totalPages }).map((_, index) => (
+                    {totalPages > 1 && Array.from({ length: totalPages }).map((_, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentPage(index + 1)}

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Container from "@/components/Container";
 import earphones from "@/public/images/landing/earphones.png";
 import controller from "@/public/images/landing/controller.png";
 import Link from "next/link";

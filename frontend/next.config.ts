@@ -17,6 +17,14 @@ const nextConfig: NextConfig = {
         // Adjust the pathname if needed (e.g., '/data/products/**')
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        // Adjust the pathname if needed (e.g., '/data/products/**')
+        pathname: '/**',
+      },
+
     ],
   },
 };
