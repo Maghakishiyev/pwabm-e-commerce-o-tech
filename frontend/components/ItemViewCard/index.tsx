@@ -8,7 +8,7 @@ export const ItemViewCard: React.FC<IProduct> = ({
     detail_description,
     price,
     available_colors,
-    product_image_url,
+    product_image_url
 }: IProduct) => {
     return (
         <div className="bg-white rounded-lg shadow-lg dark:bg-gray-100 p-4 flex flex-col items-center hover:shadow-xl transition-shadow duration-300">
@@ -16,7 +16,7 @@ export const ItemViewCard: React.FC<IProduct> = ({
             <Link href={`/products/${_id}`} key={_id}>
                 <Image
                     className="w-[200px] h-[200px] object-contain rounded-lg mb-4"
-                    src={product_image_url}
+                    src={product_image_url || "/default-image.png"}
                     alt={name}
                     width={600}
                     height={800}
