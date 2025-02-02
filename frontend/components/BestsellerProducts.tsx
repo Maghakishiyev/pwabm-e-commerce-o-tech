@@ -4,7 +4,18 @@ import { ItemViewCard } from './ItemViewCard';
 const BestsellerProducts = () => {
     const products = [
         {
-            id: '1',
+            _id: "1",
+            availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
+            name: 'Apple iPhone 14 Pro Max',
+            description: '128GB Deep Purple (MQ9T3RX/A)',
+            itemImageUrl: '/images/test/iphone14.png',
+            price: '1699,99$',
+            category_id: "smartphones",
+            brand_id: "apple",
+            detail_description: "The latest iPhone with advanced features and sleek design.",
+        },
+        {
+            _id: "2",
             availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
             name: 'Apple iPhone 14 Pro Max',
             description: '128GB Deep Purple (MQ9T3RX/A)',
@@ -12,7 +23,7 @@ const BestsellerProducts = () => {
             price: '1699,99$',
         },
         {
-            id: '2',
+            _id: "3",
             availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
             name: 'Apple iPhone 14 Pro Max',
             description: '128GB Deep Purple (MQ9T3RX/A)',
@@ -20,7 +31,7 @@ const BestsellerProducts = () => {
             price: '1699,99$',
         },
         {
-            id: '3',
+            _id: "4",
             availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
             name: 'Apple iPhone 14 Pro Max',
             description: '128GB Deep Purple (MQ9T3RX/A)',
@@ -28,7 +39,7 @@ const BestsellerProducts = () => {
             price: '1699,99$',
         },
         {
-            id: '4',
+            _id: "5",
             availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
             name: 'Apple iPhone 14 Pro Max',
             description: '128GB Deep Purple (MQ9T3RX/A)',
@@ -36,7 +47,7 @@ const BestsellerProducts = () => {
             price: '1699,99$',
         },
         {
-            id: '5',
+            _id: "6",
             availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
             name: 'Apple iPhone 14 Pro Max',
             description: '128GB Deep Purple (MQ9T3RX/A)',
@@ -44,15 +55,7 @@ const BestsellerProducts = () => {
             price: '1699,99$',
         },
         {
-            id: '6',
-            availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
-            name: 'Apple iPhone 14 Pro Max',
-            description: '128GB Deep Purple (MQ9T3RX/A)',
-            itemImageUrl: '/images/test/iphone14.png',
-            price: '1699,99$',
-        },
-        {
-            id: '7',
+            _id: "7",
             availableColors: ['#5B5B5B', '#AB83FF', '#6D9FFF', '#FF6363'],
             name: 'Apple iPhone 14 Pro Max',
             description: '128GB Deep Purple (MQ9T3RX/A)',
@@ -68,13 +71,16 @@ const BestsellerProducts = () => {
                 {products.map(product => (
 
                     <ItemViewCard
-                        key={product.id}
-                        id={product.id}
-                        availableColors={product.availableColors}
-                        name={product.name}
-                        description={product.description}
-                        itemImageUrl={product.itemImageUrl}
+                        key={product._id}
+                        _id={product._id}
+                        available_colors={product.availableColors}
                         price={product.price}
+                        category_id={product.category_id ?? ''}
+                        brand_id={product.brand_id ?? ''}
+                        detail_description={product.detail_description ?? ''}
+                        description={product.description}
+                        product_image_url={product.itemImageUrl}
+                        name={product.name}
                     />
 
                 ))}

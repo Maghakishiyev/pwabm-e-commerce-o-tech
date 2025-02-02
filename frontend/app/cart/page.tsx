@@ -16,14 +16,14 @@ const initialCart: CartProduct[] = [
         productName: 'Apple iPhone 14 Pro Max',
         color: 'Dark Purple',
         price: "1649.99",
-        productImage: '/images/products/iphone14pro-max.png',
+        productImage: '/images/test/iphone14.png',
         quantity: 1
     },
     {
         productName: 'Beats Black HeadPhone',
         color: 'Black',
         price: "169.99",
-        productImage: '/images/products/beats-headphone.jpg',
+        productImage: '/images/test/iphone14.png',
         quantity: 1
     }
 ]

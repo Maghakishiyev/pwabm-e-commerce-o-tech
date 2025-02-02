@@ -2,7 +2,7 @@ import React from 'react';
 import './globals.css'; // Main global styles
 import { Footer, Header } from '@/components';
 
-const isSignedIn = false; // Replace this with your authentication logic
+const isSignedIn = true; // Replace this with your authentication logic
 
 export default function RootLayout({
     children,

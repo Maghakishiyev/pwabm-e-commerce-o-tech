@@ -34,7 +34,7 @@ export default function SignupForm() {
 
 
             setTimeout(() => {
-                router.push('/'); // Replace '/profile' with your desired route
+                router.push('/profile'); // Replace '/profile' with your desired route
             }, 1000);
         } catch (error: unknown) {
             // Handle error response

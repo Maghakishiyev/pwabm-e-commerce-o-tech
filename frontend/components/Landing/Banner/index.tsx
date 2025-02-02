@@ -14,7 +14,7 @@ export const LandingBanner: React.FC = () => {
         <Container className="relative max-w-[1320px] mx-auto my-8 rounded-xl overflow-hidden bg-gradient-to-r from-[#238CEC] to-[#054279] shadow-lg">
             <div className="text-center md:text-center flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold text-white mt-14">
-                    Unlock Tomorrow's Tech Today With Us!
+                    Unlock Tomorrow&apos;s Tech Today With Us!
                 </h1>
             </div>
             {/* Content Container */}
